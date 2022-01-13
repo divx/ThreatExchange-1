@@ -46,7 +46,7 @@ class SignalExchangeAPI:
     """
 
     @classmethod
-    def name(cls) -> str:
+    def get_name(cls) -> str:
         """
         A simple string name unique to SignalExchangeAPIs in use.
 
