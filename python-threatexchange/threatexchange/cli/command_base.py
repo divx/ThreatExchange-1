@@ -12,9 +12,9 @@ import argparse
 import sys
 import typing as t
 
-from .. import common
-from ..api import ThreatExchangeAPI
-from ..dataset import Dataset
+from threatexchange import common
+from threatexchange.fetcher.meta_threatexchange.api import ThreatExchangeAPI
+from .cli_state import Dataset
 
 
 class CommandError(Exception):

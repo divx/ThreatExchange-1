@@ -21,14 +21,13 @@ import re
 import sys
 import typing as t
 
-from .. import descriptor
-from ..api import ThreatExchangeAPI
-from ..collab_config import CollaborationConfig
-from ..dataset import Dataset
+from threatexchange.fetcher.meta_threatexchange import descriptor
+from threatexchange.fetcher.meta_threatexchange.api import ThreatExchangeAPI
+from threatexchange.fetcher.meta_threatexchange.collab_config import CollaborationConfig
+from .cli_state import Dataset
 from . import (
     command_base as base,
     fetch,
-    tag_fetch,
     label,
     match,
     dataset_cmd,
@@ -43,7 +42,6 @@ def get_subcommands() -> t.List[t.Type[base.Command]]:
         label.LabelCommand,
         dataset_cmd.DatasetCommand,
         hash_cmd.HashCommand,
-        tag_fetch.TagFetchCommand,
     ]
 
 

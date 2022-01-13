@@ -13,10 +13,13 @@ import warnings
 
 import Levenshtein
 
-from ..descriptor import SimpleDescriptorRollup, ThreatDescriptor
+from threatexchange.fetcher.meta_threatexchange.descriptor import (
+    SimpleDescriptorRollup,
+    ThreatDescriptor,
+)
+from threatexchange.hashing.pdq_utils import pdq_match
+from threatexchange import common
 from . import signal_base
-from ..hashing.pdq_utils import pdq_match
-from .. import common
 
 
 class PdqOcrSignal(signal_base.SimpleSignalType, signal_base.FileHasher):

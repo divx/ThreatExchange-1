@@ -11,7 +11,10 @@ import pathlib
 import re
 import typing as t
 
-from ..descriptor import SimpleDescriptorRollup, ThreatDescriptor
+from threatexchange.fetcher.meta_threatexchange.descriptor import (
+    SimpleDescriptorRollup,
+    ThreatDescriptor,
+)
 from . import signal_base
 
 

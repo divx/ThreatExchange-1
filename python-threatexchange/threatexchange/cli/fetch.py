@@ -1,25 +1,17 @@
 #!/usr/bin/env python3
 # Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved
 
-import argparse
 import collections
-import concurrent.futures
-import csv
 import datetime
-import json
-import os
-import pathlib
 import time
 import typing as t
 
-from .. import threat_updates
-from ..api import ThreatExchangeAPI
-from ..content_type import meta
-from ..dataset import Dataset
-from ..descriptor import SimpleDescriptorRollup
-from ..signal_type import signal_base
+from threatexchange.fetcher.meta_threatexchange import threat_updates
+from threatexchange.fetcher.meta_threatexchange.api import ThreatExchangeAPI
+from threatexchange.fetcher.meta_threatexchange.descriptor import SimpleDescriptorRollup
 from . import command_base
 from . import dataset_cmd
+from .cli_state import Dataset
 from .dataset.simple_serialization import CliIndicatorSerialization
 
 

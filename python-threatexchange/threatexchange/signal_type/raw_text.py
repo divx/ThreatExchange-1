@@ -11,8 +11,11 @@ import typing as t
 
 import Levenshtein
 
-from ..descriptor import SimpleDescriptorRollup, ThreatDescriptor
-from .. import common
+from threatexchange.fetcher.meta_threatexchange.descriptor import (
+    SimpleDescriptorRollup,
+    ThreatDescriptor,
+)
+from threatexchange import common
 from . import signal_base
 
 

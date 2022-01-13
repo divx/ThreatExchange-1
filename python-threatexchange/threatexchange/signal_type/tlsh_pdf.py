@@ -10,7 +10,6 @@ import typing as t
 import warnings
 from io import StringIO
 
-from ..descriptor import SimpleDescriptorRollup, ThreatDescriptor
 from . import signal_base
 
 TLSH_CONFIDENT_MATCH_THRESHOLD = 30

@@ -1,16 +1,15 @@
 # Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved
 
-import argparse
 import collections
 import csv
 import sys
 import typing as t
 
-from .. import threat_updates
-from ..api import ThreatExchangeAPI
+from ..fetcher.meta_threatexchange import threat_updates
+from ..fetcher.meta_threatexchange.api import ThreatExchangeAPI
 from ..content_type import meta
-from ..dataset import Dataset
-from ..threat_updates import ThreatUpdateSerialization
+from .cli_state import Dataset
+from ..fetcher.meta_threatexchange.threat_updates import ThreatUpdateSerialization
 from . import command_base
 from .dataset.simple_serialization import CliIndicatorSerialization
 

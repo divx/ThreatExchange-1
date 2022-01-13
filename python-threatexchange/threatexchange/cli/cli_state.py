@@ -10,14 +10,13 @@ There are a few categories of state that this wraps:
   3. Index state - serializations of indexes for SignalType
 """
 
-import json
 import pathlib
 import typing as t
 
-from . import collab_config
-from .content_type import meta
-from .signal_type import signal_base
-from .signal_type import index
+from threatexchange.fetcher.meta_threatexchange import collab_config
+from threatexchange.content_type import meta
+from threatexchange.signal_type import signal_base
+from threatexchange.signal_type import index
 
 
 class FetchCheckpoint(t.NamedTuple):

@@ -10,8 +10,8 @@ import pathlib
 import pickle
 import typing as t
 
-from .. import common
-from ..descriptor import SimpleDescriptorRollup, ThreatDescriptor
+from threatexchange import common
+from threatexchange.fetcher.meta_threatexchange.descriptor import SimpleDescriptorRollup, ThreatDescriptor
 from . import index
 
 

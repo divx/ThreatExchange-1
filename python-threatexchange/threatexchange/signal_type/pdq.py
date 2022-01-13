@@ -10,7 +10,7 @@ import pathlib
 import warnings
 
 from . import signal_base
-from ..hashing.pdq_utils import pdq_match, BITS_IN_PDQ
+from threatexchange.hashing.pdq_utils import pdq_match, BITS_IN_PDQ
 
 
 def _raise_pillow_warning():

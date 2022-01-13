@@ -7,11 +7,9 @@ Label command for uploading opinions (ThreatDescriptors) or reactions.
 
 import typing as t
 
-from .. import descriptor
-from ..api import ThreatExchangeAPI
-from ..collab_config import CollaborationConfig
-from ..content_type import meta, text
-from ..dataset import Dataset
+from threatexchange.fetcher.meta_threatexchange import descriptor
+from threatexchange.fetcher.meta_threatexchange.api import ThreatExchangeAPI
+from .cli_state import Dataset
 from . import command_base
 
 

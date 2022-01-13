@@ -5,17 +5,15 @@
 Hash command to convert content into signatures.
 """
 
-import argparse
 import pathlib
 import sys
 import typing as t
 
-from ..api import ThreatExchangeAPI
-from ..content_type import meta
-from ..dataset import Dataset
-from ..descriptor import ThreatDescriptor
-from ..signal_type.signal_base import FileHasher, StrHasher, SignalType
-from . import command_base, fetch
+from threatexchange.fetcher.meta_threatexchange.api import ThreatExchangeAPI
+from threatexchange.content_type import meta
+from .cli_state import Dataset
+from threatexchange.signal_type.signal_base import FileHasher, StrHasher
+from . import command_base
 
 
 # TODO consider refactor to handle overlap with match

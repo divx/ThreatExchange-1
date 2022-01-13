@@ -7,7 +7,6 @@ Wrapper around the URL signal type.
 
 import typing as t
 
-from ..descriptor import SimpleDescriptorRollup, ThreatDescriptor
 from . import signal_base
 
 

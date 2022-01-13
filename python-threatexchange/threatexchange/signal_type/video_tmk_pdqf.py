@@ -5,9 +5,6 @@
 Wrapper around the TMK+PDQF signal type.
 """
 
-import typing as t
-
-from ..descriptor import SimpleDescriptorRollup, ThreatDescriptor
 from . import signal_base
 
 

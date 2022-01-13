@@ -12,7 +12,6 @@ import typing as t
 from dataclasses import dataclass
 
 from .api import ThreatExchangeAPI, _CursoredResponse
-from .dataset import Dataset
 from .descriptor import SimpleDescriptorRollup
 
 

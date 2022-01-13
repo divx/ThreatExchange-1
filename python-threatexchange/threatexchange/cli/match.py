@@ -5,17 +5,16 @@
 Match command for parsing simple data sources against the dataset.
 """
 
-import argparse
 import pathlib
 import sys
 import typing as t
 
-from ..api import ThreatExchangeAPI
-from ..content_type import meta
-from ..dataset import Dataset
-from ..descriptor import ThreatDescriptor
-from ..signal_type.signal_base import FileMatcher, HashMatcher, StrMatcher
-from . import command_base, tag_fetch
+from threatexchange.fetcher.meta_threatexchange.api import ThreatExchangeAPI
+from threatexchange.content_type import meta
+from threatexchange.fetcher.meta_threatexchange.descriptor import ThreatDescriptor
+from threatexchange.signal_type.signal_base import FileMatcher, HashMatcher, StrMatcher
+from . import command_base
+from .cli_state import Dataset
 
 
 class MatchCommand(command_base.Command):
@@ -148,7 +147,7 @@ class MatchCommand(command_base.Command):
             self.stderr(
                 "Looks like you are running this for the first time. Fetching some sample data."
             )
-            tag_fetch.TagFetchCommand(sample=True).execute(api, dataset)
+            raise NotImplementedError("TODO dcallies")
 
         all_signal_types = dataset.load_cache(
             s() for s in self.content_type.get_signal_types()
