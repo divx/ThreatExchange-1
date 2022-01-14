@@ -2,7 +2,6 @@
 
 import typing as t
 import pathlib
-import os
 
 from threatexchange.collab_config import CollaborationConfig
 

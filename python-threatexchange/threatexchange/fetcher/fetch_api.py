@@ -9,7 +9,7 @@ The fetcher is the component that talks to external APIs to get and put signals
 
 import typing as t
 
-from threatexchange.collab_config import CollaborationConfig
+from threatexchange.fetcher.meta_threatexchange.collab_config import CollaborationConfig
 from threatexchange.signal_type.signal_base import SignalType
 from threatexchange.fetcher import fetch_state as state
 
