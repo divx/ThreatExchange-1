@@ -12,8 +12,14 @@ from dataclasses import dataclass
 from enum import Enum
 import typing as t
 
+from threatexchange.signal_type.signal_base import SignalType
 
-TFetchStateCheckpoint = t.TypeVar("TFetchStateCheckpoint")  # TODO for now
+
+@dataclass
+class FetchCheckpointBase:
+    """
+    If you need to store checkpoint information, this is the place to do it
+    """
 
 
 class SignalOpinionCategory(Enum):
@@ -62,6 +68,17 @@ class FetchedSignalDataBase:
     """
 
     opinions: t.List[SignalOpinion]
+    metadata_id: int = 0  # If your API doesn't support IDs, leave this as 0
+
+    def merge(self, newer: "FetchedStateBase") -> None:
+        """
+        Merge with another state object. This object is always the older state
+
+        The usual reaon this happens is the stored state is being combined
+        with the fetched state. Some APIs might append, while others might
+        replace.
+        """
+        raise NotImplementedError
 
 
 class FetchDeltaBase:
@@ -76,12 +93,12 @@ class FetchDeltaBase:
         """Helper for --limit"""
         return 1
 
-    def next_checkpoint(self) -> TFetchStateCheckpoint:
+    def next_checkpoint(self) -> FetchCheckpointBase:
         """A serializable checkpoint for fetch."""
         raise NotImplementedError
 
 
-# TODO t.Generic[TFetchDeltaBase, TFetchedSignalDataBase]
+# TODO t.Generic[TFetchDeltaBase, TFetchedSignalDataBase, FetchCheckpointBase]
 #      to help keep track of the expected subclasses for an impl
 class FetchedStateBase:
     """
@@ -99,7 +116,7 @@ class FetchedStateBase:
     since they need to be consistent between instanciation
     """
 
-    def get_checkpoint(self) -> TFetchStateCheckpoint:
+    def get_checkpoint(self) -> FetchCheckpointBase:
         """
         Returns the last checkpoint passed to merge() after a flush()
         """
@@ -123,7 +140,9 @@ class FetchedStateBase:
         raise NotImplementedError
 
     # TODO - if sticking with this signature, convert to t.NamedTuple
-    def get_as_signals(self) -> t.Dict[str, t.List[t.Tuple[str, int]]]:
+    def get_for_signal_type(
+        self, signal_type: t.Type[SignalType]
+    ) -> t.List[t.Tuple[str, int]]:
         """
         Get as a map of SignalType.name() => (signal, MetataData ID).
 
@@ -137,7 +156,9 @@ class FetchedStateBase:
         """
         raise NotImplementedError
 
-    def get_metadata_from_id(self, metadata_id: int) -> FetchedSignalDataBase:
+    def get_metadata_from_id(
+        self, metadata_id: int
+    ) -> t.Optional[FetchedSignalDataBase]:
         """
         Fetch the metadata from an ID
         """

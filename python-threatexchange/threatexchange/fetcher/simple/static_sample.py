@@ -21,18 +21,22 @@ from threatexchange.signal_type.trend_query import TrendQuery
 
 from threatexchange.fetcher import fetch_state as state
 from threatexchange.fetcher.collab_config import CollaborationConfigBase
-from threatexchange.fetcher.simple.state import SimpleFetchDelta, TypedSignalWithOpinion
+from threatexchange.fetcher.fetch_api import SignalExchangeAPI
+from threatexchange.fetcher.simple.state import (
+    SimpleFetchDelta,
+    SimpleFetchDeltaWithSyntheticID,
+    TypedSignalWithOpinion,
+)
 
 
-class StaticSampleSignalExchangeAPI:
+class StaticSampleSignalExchangeAPI(SignalExchangeAPI):
     """
-    Return a static set of sample data for demonstration
+    Return a static set of sample data for demonstration.
     """
 
     def fetch_once(
         self, collab: CollaborationConfigBase, _checkpoint: state.TFetchStateCheckpoint
-    ) -> SimpleFetchDelta:
-        """Fetch the whole file"""
+    ) -> SimpleFetchDeltaWithSyntheticID:
 
         pdqs = [_signal(PdqSignal, s) for s in _pdq_samples()]
         pdq_ocrs = [_signal(PdqSignal, s) for s in _pdq_orc_samples()]
@@ -41,8 +45,9 @@ class StaticSampleSignalExchangeAPI:
         text = [_signal(RawTextSignal, s) for s in _text_samples()]
         trend_query = [_signal(TrendQuery, s) for s in _trend_query_samples()]
 
-        return SimpleFetchDelta(
-            list(itertools.chain((pdqs, pdq_ocrs, vmd5s, urls, text, trend_query)))
+        return SimpleFetchDeltaWithSyntheticID(
+            list(itertools.chain((pdqs, pdq_ocrs, vmd5s, urls, text, trend_query))),
+            state.FetchCheckpointBase(),
         )
 
 

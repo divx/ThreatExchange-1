@@ -56,6 +56,16 @@ class SignalExchangeAPI:
         """
         return cls.__name__
 
+    @classmethod
+    def get_checkpoint_cls(cls) -> state.FetchCheckpointBase:
+        """Returns the dataclass used to control checkpoint for this API"""
+        raise NotImplementedError
+
+    @classmethod
+    def get_record_cls(cls) -> state.FetchedStateBase:
+        """Returns the dataclass used to store records for this API"""
+        raise NotImplementedError
+
     def resolve_owner(self, id: int) -> str:
         """
         Convert an owner ID into a human readable name (if available).
@@ -83,6 +93,12 @@ class SignalExchangeAPI:
     ) -> state.FetchDeltaBase:
         """
         Call out to external resources, pulling down one "batch" of content.
+
+        Many APIs are a sequence of events: (creates/updates, deletions)
+        In that case, it's important the these events are strictly ordered.
+        I.e. if the sequence is create => delete, if the sequence is reversed
+        to delete => create, the end result is a stored record, when the
+        expected is a deleted one.
         """
         raise NotImplementedError
 

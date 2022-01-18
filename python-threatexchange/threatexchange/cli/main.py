@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved
 
 """
@@ -24,8 +23,8 @@ import typing as t
 from threatexchange.fetcher.meta_threatexchange import descriptor
 from threatexchange.fetcher.meta_threatexchange.api import ThreatExchangeAPI
 from threatexchange.fetcher.meta_threatexchange.collab_config import CollaborationConfig
-from .cli_state import Dataset
-from . import (
+from threatexchange.cli.cli_state import Dataset
+from threatexchange.cli import (
     command_base as base,
     fetch,
     label,
@@ -177,6 +176,10 @@ def init_config_file(cli_provided: t.IO = None) -> CollaborationConfig:
         return CollaborationConfig.get_example_config()
     with path.open() as f:
         return CollaborationConfig.load(f)
+
+
+def get_meta_settings():
+    
 
 
 def _verify_directory(raw: str) -> pathlib.Path:

@@ -8,14 +8,14 @@ The fetcher is the component that talks to external APIs to get and put signals
 
 
 from dataclasses import dataclass
-import typing as t
 from pathlib import Path
-import os.path
 
 from threatexchange.signal_type.pdq import PdqSignal
 from threatexchange.fetcher import fetch_state as state
 from threatexchange.fetcher.collab_config import CollaborationConfigBase
-from threatexchange.fetcher.simple.state import SimpleFetchDelta, TypedSignalWithOpinion
+from threatexchange.fetcher.simple.state import (
+    SimpleFetchDeltaWithSyntheticID,
+)
 
 
 @dataclass
@@ -30,7 +30,7 @@ class LocalFileSignalExchangeAPI:
     """
 
     def fetch_once(
-        self, collab: FileCollaborationConfig, _checkpoint: state.TFetchStateCheckpoint
+        self, collab: FileCollaborationConfig, _checkpoint: state.FetchCheckpointBase
     ) -> state.FetchDeltaBase:
         """Fetch the whole file"""
         path = Path(collab.filename)
@@ -41,16 +41,6 @@ class LocalFileSignalExchangeAPI:
         with path.open("r") as f:
             lines = f.readlines()
 
-        return SimpleFetchDelta(
-            [
-                TypedSignalWithOpinion(
-                    PdqSignal,
-                    l.strip(),
-                    state.SignalOpinion(
-                        0, state.SignalOpinionCategory.TRUE_POSITIVE, []
-                    ),
-                )
-                for l in lines
-            ],
-            None,
+        return SimpleFetchDeltaWithSyntheticID.from_simple_opinons(
+            PdqSignal, (line.trim() for line in lines)
         )
