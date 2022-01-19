@@ -6,12 +6,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdexcept>
+#include <chrono>
 
 // ================================================================
 // Ops/demo tool for computing PDQ hashes of image files (JPEG, PNG, etc.)
 // ================================================================
 
 using namespace facebook::pdq::hashing;
+using namespace std::chrono;
 
 static void process_file(
     char* argv0,
@@ -207,6 +209,12 @@ void process_file(
   float readSecondsUnused = 0.0;
   float hashSecondsUnused = 0.0;
   if (do_pdqhash) {
+
+    // timestamp
+    uint64_t msStart = duration_cast< milliseconds >(
+        system_clock::now().time_since_epoch()
+    ).count();
+
     try {
       facebook::pdq::hashing::pdqHash256FromFile(
         filename,
@@ -225,6 +233,13 @@ void process_file(
         exit(1);
       }
     }
+
+    // timestamp
+    uint64_t msEnd = duration_cast< milliseconds >(
+        system_clock::now().time_since_epoch()
+    ).count();
+    printf("filename: %s Time to hash (ms): %ld\n\n", filename, msEnd - msStart );
+
     norm = pdqhash.hammingNorm();
     delta = (num_pdqhash == 1) ? 0 : pdqhash.hammingDistance(pdqhash_prev);
 
@@ -242,6 +257,12 @@ void process_file(
   }
 
   if (do_pdqdih) {
+
+    // timestamp
+    uint64_t msStart = duration_cast< milliseconds >(
+        system_clock::now().time_since_epoch()
+    ).count();
+
     try {
       (void)facebook::pdq::hashing::pdqDihedralHash256esFromFile(
           filename,
@@ -266,6 +287,12 @@ void process_file(
         exit(1);
       }
     }
+
+    // timestamp
+    uint64_t msEnd = duration_cast< milliseconds >(
+        system_clock::now().time_since_epoch()
+    ).count();
+    printf("filename: %s Time to hash (ms): %ld\n\n", filename, msEnd - msStart );
 
     if (!do_detailed_output) {
       if (do_pdqdih_across) {

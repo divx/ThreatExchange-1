@@ -14,6 +14,7 @@
 #include <string.h>
 #include <time.h>
 #include <unistd.h>
+#include <chrono>
 
 // ================================================================
 // This is an ops tool for doing various things to 256-bit hashes
@@ -25,6 +26,7 @@
 // ================================================================
 using namespace facebook::pdq::hashing;
 using namespace facebook::pdq::io;
+using namespace std::chrono;
 
 static void usage(char* argv0, int rc);
 static void do_norms(char* argv0, char* argv1, int argc, char** argv);
@@ -207,7 +209,16 @@ do_matrix(char* argv0, char* /*unused*/, int argc, char** argv, bool do_cij) {
   } else {
     for (int i = 0; i < (int)hashes1.size(); i++) {
       for (int j = 0; j < (int)hashes2.size(); j++) {
-        printf(" %3d", hashes1[i].hammingDistance(hashes2[j]));
+        // timestamp
+        uint64_t msStart = duration_cast< milliseconds >(
+            system_clock::now().time_since_epoch()
+        ).count();
+        printf("Matrix hamming distance: %3d", hashes1[i].hammingDistance(hashes2[j]));
+        // timestamp
+        uint64_t msEnd = duration_cast< milliseconds >(
+            system_clock::now().time_since_epoch()
+        ).count();
+        printf("Time to compare (ms): %ld\n\n", msEnd - msStart );
       }
       printf("\n");
     }
@@ -228,7 +239,16 @@ do_pairwise_distances(char* argv0, char* argv1, int argc, char** argv) {
   loadHashesFromFileOrDie(argv[1], hashes2);
 
   for (int i = 0; i < (int)hashes1.size() && i < (int)hashes2.size(); i++) {
-    printf("%3d\n", hashes1[i].hammingDistance(hashes2[i]));
+    // timestamp
+    uint64_t msStart = duration_cast< milliseconds >(
+        system_clock::now().time_since_epoch()
+    ).count();
+    printf("Pairwise hamming distance: %3d\n", hashes1[i].hammingDistance(hashes2[i]));
+    // timestamp
+    uint64_t msEnd = duration_cast< milliseconds >(
+        system_clock::now().time_since_epoch()
+    ).count();
+    printf("Time to compare (ms): %ld\n\n", msEnd - msStart );
   }
 }
 

@@ -20,9 +20,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <chrono>
 
 using namespace facebook::tmk;
 using namespace facebook::tmk::algo;
+using namespace std::chrono;
 
 // ================================================================
 void usage(const char* argv0, int exit_rc) {
@@ -77,8 +79,31 @@ int main(int argc, char** argv) {
       fprintf(stderr, "Using sine and cosine similarity.\n");
     }
   } else {
+
+    // timestamp
+    uint64_t msStart = duration_cast< milliseconds >(
+        system_clock::now().time_since_epoch()
+    ).count();
+
     float score1 = TMKFeatureVectors::computeLevel1Score(*pfva, *pfvb) > minScore;
+    // timestamp
+    uint64_t msEnd = duration_cast< milliseconds >(
+        system_clock::now().time_since_epoch()
+    ).count();
+    printf("level 1 time to compare (ms): %ld\n\n", msEnd - msStart );
+
+    // timestamp
+    msStart = duration_cast< milliseconds >(
+        system_clock::now().time_since_epoch()
+    ).count();
+
     float score2 = TMKFeatureVectors::computeLevel2Score(*pfva, *pfvb)  > minScore;
+    // timestamp
+    msEnd = duration_cast< milliseconds >(
+        system_clock::now().time_since_epoch()
+    ).count();
+    printf("level 2 time to compare (ms): %ld\n\n", msEnd - msStart );
+
     ok = (score1 > minScore) && (score2 > minScore);
     if(verbose){
       fprintf(stderr, "Level 1 Score: %f Level 2 Score: %f Tolerance: %f\n", score1, score2, tol);

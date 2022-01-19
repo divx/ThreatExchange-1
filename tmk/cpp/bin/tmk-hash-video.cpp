@@ -16,8 +16,10 @@
 #include <string.h>
 #include <string>
 #include <memory>
+#include <chrono>
 
 using namespace std;
+using namespace std::chrono;
 
 // ----------------------------------------------------------------
 void usage(char* argv0, int exit_rc) {
@@ -142,6 +144,11 @@ int main(int argc, char* argv[]) {
   }
 
   facebook::tmk::algo::TMKFeatureVectors tmkFeatureVectors;
+
+  // timestamp
+  uint64_t msStart = duration_cast< milliseconds >(
+      system_clock::now().time_since_epoch()
+  ).count();
   bool rc = facebook::tmk::hashing::hashVideoFile(
       inputVideoFileName,
       tmkFramewiseAlgorithm,
@@ -150,6 +157,12 @@ int main(int argc, char* argv[]) {
       tmkFeatureVectors,
       verbose,
       argv[0]);
+
+  // timestamp
+  uint64_t msEnd = duration_cast< milliseconds >(
+      system_clock::now().time_since_epoch()
+  ).count();
+  printf("video filename: %s Time to hash (ms): %ld\n\n", inputVideoFileName.c_str(), msEnd - msStart );
 
   if (!rc) {
     fprintf(
