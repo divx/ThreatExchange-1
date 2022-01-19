@@ -1,3 +1,5 @@
+* Note this is a private fork of the Facebook ThreatExchange repo. In order to fetch future changes from the Facebook repo, take a look at [this github snippet](https://gist.github.com/0xjac/85097472043b697ab57ba1b1c7530274).
+
 # Facebook ThreatExchange
 
 ThreatExchange is a set of RESTful APIs on the Facebook Platform for querying, publishing, and sharing security threat information. It's a lightweight way for exchanging details on malware, phishing pages, and other threats with either specific members of the community or the ThreatExchange community at large.
