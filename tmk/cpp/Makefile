@@ -1,6 +1,6 @@
 # ----------------------------------------------------------------
 CC=g++ -O2 -std=c++14 -I../..
-FFMPEG=/usr/local/bin/ffmpeg # please customize according to your installation
+FFMPEG=/usr/bin/ffmpeg # please customize according to your installation
 
 # ----------------------------------------------------------------
 LIBHDR= \

@@ -47,7 +47,8 @@ MAINS=\
  test-hamming
 
 TESTS=\
- run-test-bits run-test-hamming run-reg-test
+ run-test-bits run-test-hamming 
+ # run-reg-test
 
 # ================================================================
 top: $(MAINS) $(TESTS)
@@ -56,8 +57,8 @@ run-test-bits: test-bits
 	./test-bits
 run-test-hamming: test-hamming
 	./test-hamming
-run-reg-test:
-	./reg_test/run
+#run-reg-test:
+#	./reg_test/run
 itso:
 	cp output-regtest/out reg_test/expected
 
